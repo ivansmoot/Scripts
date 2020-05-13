@@ -3,7 +3,7 @@
 # 将该测试用例的过程日志，写在当前文件夹下的WorksPublish.log文件中
 rm -rf WorksPublish.log
 touch WorksPublish.log
-adb logcat | grep versa > WorksPublish.log &
+adb logcat "*:W" | grep versa > WorksPublish.log &
 
 # 使用该脚本进入app主界面
 source ./Get2MainInterface.sh
