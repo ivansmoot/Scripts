@@ -30,8 +30,8 @@ HASINSTALL=`adb shell pm list packages com.versa ｜ grep versa | wc -l`
 if [ "$HASDEVICES" == "List of devices attached" ]
 then
     echo "请连接设备"
-# 如果含有"com.versa"的包为4个，判定手机安装马卡龙，进行卸载操作，并进入方法步骤
-elif [ "$HASINSTALL" -eq 4 ]
+# 如果含有"com.versa"的包大于等于1个，判定手机安装马卡龙，进行卸载操作，并进入方法步骤
+elif [ "$HASINSTALL" -ge 1 ]
 then
     adb shell pm uninstall com.versa
     echo "卸载成功"
