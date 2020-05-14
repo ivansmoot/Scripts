@@ -18,6 +18,20 @@ adb shell input keyevent 4
 # 重新点击首页加号
 adb shell input tap $IndexPlusX $IndexPlusY
 sleep 2
+# 点击相机icon
+adb shell input tap $PhotoInTemplateRecommendationPageX $PhotoInTemplateRecommendationPageY
+sleep 1
+# 点击拍照
+adb shell input tap $ShootButtonX $ShootButtonY
+sleep 3
+# 点击完成
+adb shell input tap $CompleteX $CompleteY
+sleep 5
+# 点击发布
+adb shell input tap $PublishX $PublishY
+# 点击首页加号
+adb shell input tap $IndexPlusX $IndexPlusY
+sleep 2
 # 点击"所有图片"
 adb shell input tap $AllPhotoX $AllPhotoY
 sleep 1

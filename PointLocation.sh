@@ -88,3 +88,11 @@ CompleteY=80
 # 发布页发布按钮
 PublishX=779
 PublishY=1738
+
+# 模板推荐页相机
+PhotoInTemplateRecommendationPageX=216
+PhotoInTemplateRecommendationPageY=580
+
+# 拍摄按钮
+ShootButtonX=531
+ShootButtonY=1691
