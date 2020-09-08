@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyboard sceneWidth="1280" sceneHeight="720">
+	<wipeSrcTrack>
+		<effect name="transform">
+			<animation paramName="transY">
+				<key time="0" value="0"/>
+				<key time="40" value="4"/>
+				<key time="80" value="19"/>
+				<key time="120" value="52"/>
+				<key time="160" value="120"/>
+				<key time="200" value="230"/>
+				<key time="240" value="337"/>
+				<key time="280" value="418"/>
+				<key time="320" value="477"/>
+				<key time="360" value="523"/>
+				<key time="400" value="560"/>
+				<key time="440" value="590"/>
+				<key time="480" value="614"/>
+				<key time="520" value="635"/>
+				<key time="560" value="652"/>
+				<key time="600" value="666"/>
+				<key time="640" value="678"/>
+				<key time="680" value="688"/>
+				<key time="720" value="697"/>
+				<key time="760" value="703"/>
+				<key time="800" value="709"/>
+				<key time="840" value="713"/>
+				<key time="880" value="716"/>
+				<key time="920" value="718"/>
+				<key time="960" value="720"/>
+				<key time="1000" value="720"/>
+			</animation>
+		</effect>
+	</wipeSrcTrack>	
+	<wipeDstTrack>
+		<effect name="transform">
+			<animation paramName="transY">
+				<key time="0" value="-720"/>
+				<key time="40" value="-716"/>
+				<key time="80" value="-701"/>
+				<key time="120" value="-667"/>
+				<key time="160" value="-599"/>
+				<key time="200" value="-490"/>
+				<key time="240" value="-383"/>
+				<key time="280" value="-302"/>
+				<key time="320" value="-243"/>
+				<key time="360" value="-197"/>
+				<key time="400" value="-160"/>
+				<key time="440" value="-130"/>
+				<key time="480" value="-106"/>
+				<key time="520" value="-86"/>
+				<key time="560" value="-68"/>
+				<key time="600" value="-54"/>
+				<key time="640" value="-42"/>
+				<key time="680" value="-32"/>
+				<key time="720" value="-23"/>
+				<key time="760" value="-17"/>
+				<key time="800" value="-11"/>
+				<key time="840" value="-7"/>
+				<key time="880" value="-4"/>
+				<key time="920" value="-2"/>
+				<key time="960" value="0"/>
+				<key time="1000" value="0"/>
+			</animation>
+		</effect>
+	</wipeDstTrack>
+	<track source="white_block.png" width="1280" height="720" clipStart="0" clipDuration="1000">
+		<effect name="transform">
+			<animation paramName="transY">
+				<key time="0" value="-720"/>
+				<key time="40" value="-716"/>
+				<key time="80" value="-701"/>
+				<key time="120" value="-667"/>
+				<key time="160" value="-599"/>
+				<key time="200" value="-490"/>
+				<key time="240" value="-383"/>
+				<key time="280" value="-302"/>
+				<key time="320" value="-243"/>
+				<key time="360" value="-197"/>
+				<key time="400" value="-160"/>
+				<key time="440" value="-130"/>
+				<key time="480" value="-106"/>
+				<key time="520" value="-86"/>
+				<key time="560" value="-68"/>
+				<key time="600" value="-54"/>
+				<key time="640" value="-42"/>
+				<key time="680" value="-32"/>
+				<key time="720" value="-23"/>
+				<key time="760" value="-17"/>
+				<key time="800" value="-11"/>
+				<key time="840" value="-7"/>
+				<key time="880" value="-4"/>
+				<key time="920" value="-2"/>
+				<key time="960" value="0"/>
+				<key time="1000" value="0"/>
+			</animation>
+		</effect>
+	</track>
+</storyboard>
