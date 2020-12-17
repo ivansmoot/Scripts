@@ -1,5 +1,5 @@
-import os
-import re
+from os import listdir, path
+from re import match
 
 
 def file_name(target_dir):
@@ -11,18 +11,18 @@ def file_name(target_dir):
         target_dir:目标目录，将只返回该目录下的文件名，不包括子目录
 
     :return
-        包含所有符合规则的文件名list(拼接绝对路径)
+        file_list:包含所有符合规则的文件名list(拼接绝对路径)
 
     :raise
         ValueError:目标目录内没有符合规则的文件
-
     """
     file_list = []
-    file_and_dir_list = os.listdir(target_dir)
+    print(target_dir)
+    file_and_dir_list = listdir(target_dir)
     for each_file in file_and_dir_list:
         # 注意要去掉～开头的临时文件
-        if re.match(r'^[^~][\S]+?-[\S]+?-[\S]+?-[\S]+?-[\S]+?.(xlsx)', each_file):
-            each_file = os.path.abspath(target_dir) + "/" + each_file
+        if match(r'^[^~][\S]+?-[\S]+?-[\S]+?-[\S]+?-[\S]+?.(xlsx)', each_file):
+            each_file = path.abspath(target_dir) + "/" + each_file
             file_list.append(each_file)
     if file_list:
         return file_list

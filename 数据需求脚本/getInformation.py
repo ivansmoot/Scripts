@@ -1,25 +1,43 @@
-import sys
-import os
-import pandas
+from os import path, remove
+from sys import argv
+from pandas import read_excel
 from datetime import datetime
 from openpyxl import Workbook, load_workbook, styles
 from getFiles import file_name
 from getLostDate import get_lost_date
 
 
+"""
+对表格进行处理，这里的操作都是简单的excel处理，只是在保存的时候遇到了一些小问题
+主要难点在打包上，即如何让数据方便使用这个脚本
+使用pyinstaller进行打包，进到当前目录，注意使用虚拟环境，避免打包一些不需要的库，pycharm会自己创建一个虚拟环境
+如果需要额外使用自己的虚拟环境的话
+pip install pipenv
+pipenv install
+pipenv shell
+进入虚拟环境后，安装脚本需要的库，以及pyinstaller
+然后pyinstaller -Fw ./getInformation.py
+注意请使用3.7.6及以下版本的python，实测高版本python打包后执行报错
+执行完毕后在当前目录下的dist文件夹里会生成一个文件
+发给数据后，给文件加上执行权限即可
+"""
+
 # 获取目录
 # 如果给了参数就使用参数的目录，否则使用默认的目录
-target_dir = ""
-if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
-    target_dir = sys.argv[1]
-else:
-    target_dir = "./"
+# target_dir = ""
+# if len(argv) > 1 and path.exists(argv[1]):
+#     target_dir = argv[1]
+# else:
+#     target_dir = "./"
+
+# 直接取当前目录了，通过这种方式去拿当前目录，别的方法可能在打包后拿到错误的目录
+target_dir = path.dirname(path.realpath(argv[0])) + "/"
 
 # 删除模板文件
-if os.path.exists(target_dir + "渠道数据整合模板.xlsx"):
-    os.remove(target_dir + "渠道数据整合模板.xlsx")
-if os.path.exists(target_dir + "渠道数据整合模板.csv"):
-    os.remove(target_dir + "渠道数据整合模板.csv")
+if path.exists(target_dir + "渠道数据整合模板.xlsx"):
+    remove(target_dir + "渠道数据整合模板.xlsx")
+if path.exists(target_dir + "渠道数据整合模板.csv"):
+    remove(target_dir + "渠道数据整合模板.csv")
 # 读当前目录下的文件
 files = file_name(target_dir)
 # 创建模板文件
@@ -113,7 +131,6 @@ for file in files:
 
 # 补充剩余日期
 lost_dates = get_lost_date(dates)
-print(lost_dates)
 if lost_dates:
     work_book3 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
     ws3 = work_book3.active
@@ -129,7 +146,7 @@ if lost_dates:
 然后保存一个csv，还得设置index=False，不然第一列会多出来索引，然后得设置编码，否则用excel打开会乱码
 然后保存一个excel，也得设置index=False，并且pandas保存后，原来的格式都没了，所以把excel的格式设置都放在了最后
 """
-df = pandas.read_excel(target_dir + "渠道数据整合模板.xlsx", engine='openpyxl')
+df = read_excel(target_dir + "渠道数据整合模板.xlsx", engine='openpyxl')
 df.sort_values(by='日期', ascending=False, inplace=True)
 df.to_csv(target_dir + "渠道数据整合模板.csv", index=False, encoding='utf_8_sig')
 df.to_excel(target_dir + "渠道数据整合模板.xlsx", index=False)
