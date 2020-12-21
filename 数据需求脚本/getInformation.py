@@ -40,6 +40,7 @@ if path.exists(target_dir + "渠道数据整合模板.csv"):
     remove(target_dir + "渠道数据整合模板.csv")
 # 读当前目录下的文件
 files = file_name(target_dir)
+print('共拿到' + str(len(files)) + '个文件')
 # 创建模板文件
 wb = Workbook()  # 得到一个excel
 ws = wb.active  # 得到一个sheet
@@ -72,11 +73,16 @@ for file in files:
     # 提取出
     # 万象新动-马卡龙玩图-oppo-oppo信息流-12.15
     simple_file = str("".join(file.rsplit('.', 1)[:-1]).rsplit('/', 1)[1])
-
+    print('正在处理：' + simple_file)
     # 设置各列的名字从哪里取的，有的是从文件名里split出来的，有的从表里拿的数据
-    supplier = simple_file.split('-')[-5]  # 供应商->供应商
-    channel = simple_file.split('-')[-3]  # 渠道->渠道
-    channel_name = simple_file.split('-')[-2]  # 渠道包名->投放渠道名
+    # 文件名可能是五段，也可能是四段，如果是五段的话，需要处理成四段
+    simple_file_split = simple_file.split('-')
+    if len(simple_file_split) == 5:
+        simple_file = simple_file_split[-5] + '-' + simple_file_split[-4] + '-' + simple_file_split[-3] + '-' + \
+                      simple_file_split[-2] + simple_file_split[-1]
+    supplier = simple_file.split('-')[-4]  # 供应商->供应商
+    channel = simple_file.split('-')[-2]  # 渠道->渠道
+    channel_name = simple_file.split('-')[-1]  # 渠道包名->投放渠道名
     date = ""  # 日期->日期
     os = ""  # os->操作系统
     download = ""  # 下载->下载量
@@ -98,9 +104,9 @@ for file in files:
             dates.append(date)
         # 拿到数据
         os = sheet1["B" + str(row)].value
-        download = sheet1["E" + str(row)].value
-        activation = sheet1["F" + str(row)].value
-        conversion_rate = sheet1["L" + str(row)].value
+        download = sheet1["G" + str(row)].value
+        activation = sheet1["K" + str(row)].value
+        conversion_rate = sheet1["J" + str(row)].value
         consumption_amount = sheet1["N" + str(row)].value
         cpa = sheet1["O" + str(row)].value
         secondary_stay = sheet1["P" + str(row)].value
@@ -129,6 +135,7 @@ for file in files:
         # 每次写完都要保存一下
         work_book2.save(target_dir + "渠道数据整合模板.xlsx")
 
+print('正在处理日期...')
 # 补充剩余日期
 lost_dates = get_lost_date(dates)
 if lost_dates:
@@ -146,11 +153,13 @@ if lost_dates:
 然后保存一个csv，还得设置index=False，不然第一列会多出来索引，然后得设置编码，否则用excel打开会乱码
 然后保存一个excel，也得设置index=False，并且pandas保存后，原来的格式都没了，所以把excel的格式设置都放在了最后
 """
+print('正在保存csv...')
 df = read_excel(target_dir + "渠道数据整合模板.xlsx", engine='openpyxl')
 df.sort_values(by='日期', ascending=False, inplace=True)
 df.to_csv(target_dir + "渠道数据整合模板.csv", index=False, encoding='utf_8_sig')
 df.to_excel(target_dir + "渠道数据整合模板.xlsx", index=False)
 
+print('正在设置xlsx文件格式...')
 # 设置excel格式
 work_book4 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
 ws4 = work_book4.active
@@ -174,5 +183,7 @@ ws4.column_dimensions['I'].width = 20
 ws4.column_dimensions['J'].width = 20
 ws4.column_dimensions['K'].width = 20
 
+print('保存文件中...')
 # 重新保存excel
 work_book4.save(target_dir + "渠道数据整合模板.xlsx")
+print('处理完成！')
