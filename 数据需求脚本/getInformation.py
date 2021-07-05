@@ -60,6 +60,8 @@ wb.save(target_dir + "渠道数据整合模板.xlsx")
 # 目标文件从第二行开始写入，第一行是标题
 tar_row = 2
 dates = []
+work_book2 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
+ws2 = work_book2.active
 for file in files:
     # 这里要设置data_only=True，否则会受到公式的影响
     work_book1 = load_workbook(file, data_only=True)
@@ -114,9 +116,6 @@ for file in files:
         # 拿完一行的数据给row+1，准备拿下一行
         row += 1
 
-        # 拿下一行数据前，要把这一行的数据先写入
-        work_book2 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
-        ws2 = work_book2.active
         ws2['A' + str(tar_row)] = date
         ws2['B' + str(tar_row)] = channel
         ws2['C' + str(tar_row)] = channel_name
@@ -131,9 +130,7 @@ for file in files:
 
         # 写入完要给tar_row+1，下次写入的时候换行
         tar_row += 1
-
-        # 每次写完都要保存一下
-        work_book2.save(target_dir + "渠道数据整合模板.xlsx")
+work_book2.save(target_dir + "渠道数据整合模板.xlsx")
 
 print('正在处理日期...')
 # 补充剩余日期
