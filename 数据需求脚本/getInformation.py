@@ -55,13 +55,11 @@ ws['H1'] = '下载量'
 ws['I1'] = '激活量'
 ws['J1'] = '次日留存'
 ws['K1'] = 'CPA'
-wb.save(target_dir + "渠道数据整合模板.xlsx")
 
 # 目标文件从第二行开始写入，第一行是标题
 tar_row = 2
 dates = []
-work_book2 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
-ws2 = work_book2.active
+# work_book2 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
 for file in files:
     # 这里要设置data_only=True，否则会受到公式的影响
     work_book1 = load_workbook(file, data_only=True)
@@ -116,32 +114,30 @@ for file in files:
         # 拿完一行的数据给row+1，准备拿下一行
         row += 1
 
-        ws2['A' + str(tar_row)] = date
-        ws2['B' + str(tar_row)] = channel
-        ws2['C' + str(tar_row)] = channel_name
-        ws2['D' + str(tar_row)] = conversion_rate
-        ws2['E' + str(tar_row)] = os
-        ws2['F' + str(tar_row)] = supplier
-        ws2['G' + str(tar_row)] = consumption_amount
-        ws2['H' + str(tar_row)] = download
-        ws2['I' + str(tar_row)] = activation
-        ws2['J' + str(tar_row)] = secondary_stay
-        ws2['K' + str(tar_row)] = cpa
+        ws['A' + str(tar_row)] = date
+        ws['B' + str(tar_row)] = channel
+        ws['C' + str(tar_row)] = channel_name
+        ws['D' + str(tar_row)] = conversion_rate
+        ws['E' + str(tar_row)] = os
+        ws['F' + str(tar_row)] = supplier
+        ws['G' + str(tar_row)] = consumption_amount
+        ws['H' + str(tar_row)] = download
+        ws['I' + str(tar_row)] = activation
+        ws['J' + str(tar_row)] = secondary_stay
+        ws['K' + str(tar_row)] = cpa
 
         # 写入完要给tar_row+1，下次写入的时候换行
         tar_row += 1
-work_book2.save(target_dir + "渠道数据整合模板.xlsx")
 
 print('正在处理日期...')
 # 补充剩余日期
 lost_dates = get_lost_date(dates)
 if lost_dates:
-    work_book3 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
-    ws3 = work_book3.active
     for lost_date in lost_dates:
-        ws3['A' + str(tar_row)] = lost_date
+        ws['A' + str(tar_row)] = lost_date
         tar_row += 1
-    work_book3.save(target_dir + "渠道数据整合模板.xlsx")
+
+wb.save(target_dir + "渠道数据整合模板.xlsx")
 
 
 """根据日期排序
@@ -158,29 +154,29 @@ df.to_excel(target_dir + "渠道数据整合模板.xlsx", index=False)
 
 print('正在设置xlsx文件格式...')
 # 设置excel格式
-work_book4 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
-ws4 = work_book4.active
+wb2 = load_workbook(target_dir + "渠道数据整合模板.xlsx")
+ws2 = wb2.active
 
 # 左对齐，上下居中
 alignment = styles.Alignment(horizontal='left', vertical='center')
 # 要对每个单元格都设置
-for row in ws4.rows:
+for row in ws2.rows:
     for cell in row:
         cell.alignment = alignment
 # 设置列宽
-ws4.column_dimensions['A'].width = 20
-ws4.column_dimensions['B'].width = 20
-ws4.column_dimensions['C'].width = 20
-ws4.column_dimensions['D'].width = 20
-ws4.column_dimensions['E'].width = 20
-ws4.column_dimensions['F'].width = 20
-ws4.column_dimensions['G'].width = 20
-ws4.column_dimensions['H'].width = 20
-ws4.column_dimensions['I'].width = 20
-ws4.column_dimensions['J'].width = 20
-ws4.column_dimensions['K'].width = 20
+ws2.column_dimensions['A'].width = 20
+ws2.column_dimensions['B'].width = 20
+ws2.column_dimensions['C'].width = 20
+ws2.column_dimensions['D'].width = 20
+ws2.column_dimensions['E'].width = 20
+ws2.column_dimensions['F'].width = 20
+ws2.column_dimensions['G'].width = 20
+ws2.column_dimensions['H'].width = 20
+ws2.column_dimensions['I'].width = 20
+ws2.column_dimensions['J'].width = 20
+ws2.column_dimensions['K'].width = 20
 
 print('保存文件中...')
 # 重新保存excel
-work_book4.save(target_dir + "渠道数据整合模板.xlsx")
+wb2.save(target_dir + "渠道数据整合模板.xlsx")
 print('处理完成！')
